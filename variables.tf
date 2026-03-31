@@ -42,6 +42,6 @@ variable "database_cidr_block" {
 }
 
 variable "route_table_tags" {
-    type = list
+    type = map
     default = {}
 }
