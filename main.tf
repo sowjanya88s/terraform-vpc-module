@@ -1,7 +1,7 @@
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
-  tags = (
+  tags = merge(
     local.common_tags,
     {
         Name = "${var.project}-${var.environment}"
@@ -10,9 +10,10 @@ resource "aws_vpc" "main" {
   )
 }
 
+
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
-  tags = (
+  tags = merge(
     local.common_tags,
     {
         Name = "${var.project}-${var.environment}"
