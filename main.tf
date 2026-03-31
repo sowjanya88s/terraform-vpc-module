@@ -80,6 +80,18 @@ resource "aws_route_table" "private" {
   )
 }
 
+resource "aws_route_table" "database" {
+  vpc_id = aws_vpc.main.id
+  tags = merge(
+    local.common_tags,
+    {
+        Name = "${var.project}-${var.environment}-database-rt"
+    },
+    var.route_table_tags
+  )
+}
+
+
 resource "aws_route" "public_route" {
   route_table_id              = aws_route_table.public.id
   destination_ipv6_cidr_block = "0.0.0.0/0"
@@ -110,12 +122,12 @@ resource "aws_nat_gateway" "gw" {
 
 resource "aws_route" "private_route" {
   route_table_id              = aws_route_table.private.id
-  destination_ipv6_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_nat_gateway.gw.id
 }
 
 resource "aws_route" "database_route" {
   route_table_id              = aws_route_table.database.id
-  destination_ipv6_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_nat_gateway.gw.id
 }
