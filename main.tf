@@ -89,7 +89,7 @@ resource "aws_route" "public_route" {
 
 resource "aws_eip" "lb" {
  domain       = "vpc"
- tags = (
+ tags = merge(
     var.common_tags,
     {
         Name = "${var.project}-${var.environment}-elastic-ip"
@@ -100,7 +100,7 @@ resource "aws_eip" "lb" {
 resource "aws_nat_gateway" "gw" {
   allocation_id = aws_eip.lb.id
   subnet_id     = aws_subnet.public[0].id
-  tags = (
+  tags = merge(
     var.common_tags,
     {
         Name = "${var.project}-${var.environment}-nat"
