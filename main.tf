@@ -13,7 +13,7 @@ resource "aws_subnet" "public" {
     count = length(var.cidr_block)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.cidr_block[count.index]
-  availability_zone = data.aws_availability_zones.available
+
 
   tags = {
     Name = "${var.project}-${var.environment}-dev-"
