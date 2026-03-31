@@ -1,13 +1,13 @@
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
-  tags = var.vpc_final_tags
+  tags = local.vpc_final_tags
 }
 
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
-  tags = var.igw_final_tags
+  tags = local.igw_final_tags
 }
 
 resource "aws_subnet" "public" {
@@ -61,7 +61,7 @@ resource "aws_subnet" "database" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   tags = merge(
-    var.common_tags,
+    local.common_tags,
     {
         Name = "${var.project}-${var.environment}-public-rt"
     },
@@ -72,7 +72,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   tags = merge(
-    var.common_tags,
+    local.common_tags,
     {
         Name = "${var.project}-${var.environment}-private-rt"
     },
@@ -90,7 +90,7 @@ resource "aws_route" "public_route" {
 resource "aws_eip" "lb" {
  domain       = "vpc"
  tags = merge(
-    var.common_tags,
+    local.common_tags,
     {
         Name = "${var.project}-${var.environment}-elastic-ip"
     }
@@ -101,7 +101,7 @@ resource "aws_nat_gateway" "gw" {
   allocation_id = aws_eip.lb.id
   subnet_id     = aws_subnet.public[0].id
   tags = merge(
-    var.common_tags,
+    local.common_tags,
     {
         Name = "${var.project}-${var.environment}-nat"
     }
