@@ -5,6 +5,6 @@ locals {
         Name = "${var.project}-${var.environment}"
     }
   igw_final_tags = merge(local.common_tags , var.igw_tags)
+  az_names = slice(data.aws_availability_zones.available.azs , 0 , 2)
   
-
 }
