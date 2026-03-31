@@ -5,5 +5,6 @@ locals {
         Name = "${var.project}-${var.environment}"
     }
   igw_final_tags = merge(local.common_tags , var.igw_tags)
+  
 
 }
