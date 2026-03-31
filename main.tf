@@ -10,9 +10,9 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_subnet" "public" {
-    count = var.cidr_block
+    count = length(var.cidr_block)
   vpc_id     = aws_vpc.main.id
-  cidr_block = [count.index]
+  cidr_block = var.cidr_block[count.index]
   availability_zone = data.aws_availability_zones.available
 
   tags = {
