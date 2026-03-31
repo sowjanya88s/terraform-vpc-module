@@ -3,7 +3,7 @@ variable "project" {
 }
 
 variable "environment" {
-    type = "dev"
+    type = string
 }
 
 variable "vpc_tags" {
