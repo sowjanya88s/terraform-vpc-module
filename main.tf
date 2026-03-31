@@ -16,6 +16,6 @@ resource "aws_subnet" "public" {
   availability_zone = data.aws_availability_zones.available
 
   tags = {
-    Name = "${var.project}-${var.environment}-dev-
+    Name = "${var.project}-${var.environment}-dev-"
   }
 }
