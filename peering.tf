@@ -27,6 +27,6 @@ resource "aws_route" "roboshop-public-route" {
 resource "aws_route" "default-route" {
     count = var.is_peering_required ? 1 : 0
   route_table_id            = data.aws_route_table.default_main.id
-  destination_cidr_block    = aws_vpc.main.vpc_cidr
+  destination_cidr_block    = var.vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.roboshop-default[count.index].id
 }
