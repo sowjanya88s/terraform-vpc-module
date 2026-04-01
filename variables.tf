@@ -45,3 +45,8 @@ variable "route_table_tags" {
     type = map
     default = {}
 }
+
+variable "is_peering_required" {
+    type = boolean
+    default = false
+}
