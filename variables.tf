@@ -47,6 +47,6 @@ variable "route_table_tags" {
 }
 
 variable "is_peering_required" {
-    type = boolean
+    type = bool
     default = false
 }
