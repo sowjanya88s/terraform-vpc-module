@@ -24,6 +24,20 @@ resource "aws_route" "roboshop-public-route" {
   vpc_peering_connection_id = aws_vpc_peering_connection.roboshop-default[count.index].id
 }
 
+resource "aws_route" "roboshop-private-route" {
+    count = var.is_peering_required ? 1 : 0
+  route_table_id            = aws_route_table.private.id
+  destination_cidr_block    = data.aws_vpc.default_vpc.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.roboshop-default[count.index].id
+}
+
+resource "aws_route" "roboshop-database-route" {
+    count = var.is_peering_required ? 1 : 0
+  route_table_id            = aws_route_table.database.id
+  destination_cidr_block    = data.aws_vpc.default_vpc.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.roboshop-default[count.index].id
+}
+
 resource "aws_route" "default-route" {
     count = var.is_peering_required ? 1 : 0
   route_table_id            = data.aws_route_table.default_main.id
