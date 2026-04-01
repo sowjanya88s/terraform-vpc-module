@@ -7,7 +7,7 @@ resource "aws_vpc_peering_connection" "roboshop-default" {
   tags = {
     Name = "roboshop-default"
   }
-
+  auto_accept = true
   accepter {
     allow_remote_vpc_dns_resolution = true
   }
