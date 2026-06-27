@@ -150,3 +150,16 @@ resource "aws_route_table_association" "database" {
   subnet_id      = aws_subnet.database[count.index].id
   route_table_id = aws_route_table.database.id
 }
+
+resource "aws_db_subnet_group" "mysql" {
+  name       = "${var.project}-${var.environment}"
+  subnet_ids = [aws_subnet.database[0].id, aws_subnet.database[1].id]
+
+  tags = merge(
+    local.common_tags,
+    {
+        Name = "${var.project}-${var.environment}-database-subnet"
+    },
+    var.database_subnet_tags
+  )
+}
