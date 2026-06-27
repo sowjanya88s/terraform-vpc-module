@@ -158,8 +158,7 @@ resource "aws_db_subnet_group" "mysql" {
   tags = merge(
     local.common_tags,
     {
-        Name = "${var.project}-${var.environment}-database-subnet"
-    },
-    var.database_subnet_tags
+        Name = "${var.project}-${var.environment}"
+    }
   )
 }
